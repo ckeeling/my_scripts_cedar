@@ -1,0 +1,14 @@
+#!/bin/bash
+LIST=`ls *.out | grep '[0-9]'`
+for f in $LIST
+do
+	if [ "`tail -n1 $f | grep "Job finished with exit code"`" != "" ]
+	then
+		JOB_ID=`echo $f | sed 's/.out//'`
+		echo "=+=+=+=+=+=+=+=+=+=+=+=+=+">>$f
+		echo "Job resource usage (seff):">>$f
+		seff $JOB_ID >>$f
+        	echo "=+=+=+=+=+=+=+=+=+=+=+=+=+">>$f
+	fi
+done
+
